@@ -1,28 +1,35 @@
 import datetime as dt
 import pandas_datareader as web
 import cgi
-import time
+import json
 
 def getPrice(ticker):
-    inicio = dt.datetime(2021,9,13)
-    fim = dt.datetime(2021,9,13)
+    today = dt.datetime.now()
+    day = today.day
+    if today.hour < 10:
+        day-= 1
+    inicio = dt.datetime(today.year, today.month, day)
+    fim = dt.datetime(today.year, today.month, day)
     df = web.data.DataReader(ticker, 'yahoo', inicio, fim)
     #print(df)
-    print(len(df['Close']))
-    print(df['Close'])
+    # print(float(df['Close']))
+    result = {
+        "Date": str(fim),
+        "High": str(round(float(df["High"]), 2)),
+        "Low":  str(round(float(df["Low"]), 2)),
+        "Open":  str(round(float(df["Open"]), 2)),
+        "Close":  str(round(float(df["Close"]), 2)),
+        "Volume": str(int(df["Volume"]))
+    }
+    x = json.dumps(result)
+    print(json.dumps(result))
 
 def main(form):
-    print ("Content-type: text/html")
+    print ("Content-type: text/json")
     print("")
     getPrice(form['ticker'].value + ".sa")
 
 
 if __name__ == '__main__':
-    ini = time.time()
-    try:
-        form = cgi.FieldStorage()
-        main(form)
-    except:
-        print("Deu ruim!")
-    fim = time.time()
-    print("\nExecutou em: {}".format(fim-ini))
+    form = cgi.FieldStorage()
+    main(form)

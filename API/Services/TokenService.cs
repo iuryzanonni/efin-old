@@ -18,8 +18,7 @@ namespace API.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.username.ToString()),
-                    new Claim(ClaimTypes.Role, user.role.ToString()),
-                    new Claim(ClaimTypes.Email, "teste@fsjfhasjkhhkhasdjk")
+                    new Claim(ClaimTypes.Role, user.role.ToString())
                 }),
 
                 Expires = DateTime.UtcNow.AddHours(2),

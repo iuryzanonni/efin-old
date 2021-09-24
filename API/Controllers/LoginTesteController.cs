@@ -12,9 +12,9 @@ using API.Services;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("account/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class LoginTesteController : ControllerBase
     {
         [HttpPost]
         //[Route("login")]

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Database;
 using API.Models;
+using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,14 +33,16 @@ namespace API.Controllers
 			{
 				return NotFound();
 			}
+			user.password = "";
 			return user;
 		}
 
 		[HttpPost]
 		[Route("createuser")]
 		[AllowAnonymous]
-		public ActionResult CreateUser([FromBody] User user)
+		public ActionResult CreateUser([FromBody]User user)
 		{
+			user.password = PasswordService.EncryptPassword(user.password);
 			_contextEF.User.Add(user);
 			_contextEF.SaveChanges();
 			return new CreatedAtRouteResult("GetUser", new { id = user.id }, user);

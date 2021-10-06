@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using API.DTOs.Mappings;
 
 namespace API
 {
@@ -24,6 +26,7 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddCors();
             services.AddControllers();
 
@@ -44,6 +47,15 @@ namespace API
                     ValidateAudience = false
                 };
             });
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            }
+            );
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             string connection = Configuration.GetConnectionString("MySqlConnection");
             services.AddDbContext<ApplicationDBContext>( options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));

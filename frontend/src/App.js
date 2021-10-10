@@ -1,7 +1,14 @@
 import * as React from "react";
 import { Grid } from "@material-ui/core";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
-import Main from "./pages/Main/Main";
+import Menu from "./Components/Header/Header";
+import Main from "./Pages/Main/Main";
+import Ponto from "./Pages/Ponto/Ponto";
+import Gastos from "./Pages/Gastos/Gastos";
+import Carteira from "./Pages/Carteira/Carteira";
+import Login from "./Pages/Login/Login";
+
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const styleTheme = createTheme({
 	typography: {
@@ -14,13 +21,24 @@ function App() {
 	document.title = "E-fin";
 
 	return (
-		<ThemeProvider theme={styleTheme}>
-			<Grid container style={{ color: "white" }}>
-				<Grid item xs={12}>
-					<Main />
+		<Router>
+			<ThemeProvider theme={styleTheme}>
+				<Grid container style={{ color: "white" }}>
+					<Grid item xs={12}>
+						<Menu />
+					</Grid>
+					<Grid item xs={12}>
+						<Switch>
+							<Route path="/" exact component={Main} />
+							<Route path="/ponto" component={Ponto} />
+							<Route path="/gastos" component={Gastos} />
+							<Route path="/carteira" component={Carteira} />
+							<Route path="/login" component={Login} />
+						</Switch>
+					</Grid>
 				</Grid>
-			</Grid>
-		</ThemeProvider>
+			</ThemeProvider>
+		</Router>
 	);
 }
 

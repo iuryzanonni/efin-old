@@ -1,12 +1,11 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
-import Header from "../../components/Header/Header";
+import { Grid, Typography } from "@material-ui/core";
 
 function Pages() {
 	return (
 		<Grid container direction="row">
-			<Grid item={12}>
-				<Header />
+			<Grid item xs={12}>
+				<Typography> Inicio</Typography>
 			</Grid>
 		</Grid>
 	);

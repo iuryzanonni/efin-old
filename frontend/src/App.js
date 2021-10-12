@@ -23,7 +23,12 @@ function App() {
 	return (
 		<Router>
 			<ThemeProvider theme={styleTheme}>
-				<Grid container style={{ color: "white" }}>
+				<Grid
+					container
+					direction="column"
+					alignItems="center"
+					style={{ color: "white" }}
+				>
 					<Grid item xs={12}>
 						<Menu />
 					</Grid>

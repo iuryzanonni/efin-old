@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { Grid, Typography, Paper, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import Cookie from "js-cookie";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
 	paper: {
 		backgroundColor: "#174276",
 		height: 50,
-		width: window.screen.width,
+		minWidth: window.screen.width,
 		paddingTop: 10,
 		paddingBottom: 10,
 	},
@@ -33,6 +35,12 @@ const useStyles = makeStyles({
 
 export default function Header() {
 	const styles = useStyles();
+	const [auth, setAuth] = React.useState(null);
+	const history = useHistory();
+
+	React.useEffect(() => {
+		setAuth(Cookie.get("FINLOGIN"));
+	}, [Cookie.get("FINLOGIN")]);
 
 	const ItemMenu = (props) => {
 		return (
@@ -42,6 +50,16 @@ export default function Header() {
 				</Link>
 			</Grid>
 		);
+	};
+
+	const goTo = (path = "") => {
+		history.push("/" + path);
+	};
+
+	const logout = () => {
+		Cookie.remove("FINLOGIN");
+		goTo("login");
+		window.location.reload();
 	};
 
 	return (
@@ -54,22 +72,41 @@ export default function Header() {
 						</Typography>
 					</Link>
 				</Grid>
+
 				<Grid item xs={6}>
-					<Grid container spacing={4}>
-						<ItemMenu name="Início" to="/" />
-						<ItemMenu name="Ponto" to="ponto" />
-						<ItemMenu name="Gastos" to="gastos" />
-						<ItemMenu name="Carteira" to="carteira" />
-					</Grid>
+					{auth && (
+						<Grid container spacing={4}>
+							<ItemMenu name="Início" to="/" />
+							<ItemMenu name="Ponto" to="ponto" />
+							<ItemMenu name="Gastos" to="gastos" />
+							<ItemMenu name="Carteira" to="carteira" />
+						</Grid>
+					)}
 				</Grid>
+
 				<Grid item xs={2}>
-					<Link to="login" style={{ textDecoration: "none" }}>
-						<MenuItem className={styles.login}>
-							{<AccountCircle fontSize="large" />}
-							&nbsp;
-							{"Login"}
-						</MenuItem>
-					</Link>
+					{auth ? (
+						<Link to="login" style={{ textDecoration: "none" }}>
+							<MenuItem
+								className={styles.login}
+								onClick={() => {
+									logout();
+								}}
+							>
+								{<AccountCircle fontSize="large" />}
+								&nbsp;
+								{"Logout"}
+							</MenuItem>
+						</Link>
+					) : (
+						<Link to="login" style={{ textDecoration: "none" }}>
+							<MenuItem className={styles.login}>
+								{<AccountCircle fontSize="large" />}
+								&nbsp;
+								{"Login"}
+							</MenuItem>
+						</Link>
+					)}
 				</Grid>
 			</Grid>
 		</Paper>

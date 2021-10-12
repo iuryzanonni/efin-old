@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Database;
 using API.DTOs;
 using API.Models;
+using API.Models.Log;
 using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -46,6 +47,9 @@ namespace API.Controllers
 
 			var userDTO = _mapper.Map<UserDTO>(user);
 			var token = TokenService.GenerateToken(user);
+			TokenLog log = new TokenLog { token=token, createToken=DateTime.Now};
+			_contextEF.TokenLog.Add(log);
+			_contextEF.SaveChanges();
 			user.password = "";
 			return new { user = userDTO, token = token };
 		}

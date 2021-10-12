@@ -72,7 +72,7 @@ export default function Login() {
 			.catch((error) => {
 				if (error.response) {
 					setMessageError(error.response.data.message);
-				} else console.error(error);
+				} else setMessageError(error.message);
 			});
 	};
 

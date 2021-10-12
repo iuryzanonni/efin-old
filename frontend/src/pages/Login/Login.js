@@ -42,10 +42,7 @@ export default function Login() {
 	const [username, setUsername] = React.useState("");
 	const [password, setPassword] = React.useState("");
 	const [token, setToken] = React.useState("");
-	const [user, setUser] = React.useState({
-		username: "",
-		role: "",
-	});
+
 	const [messageError, setMessageError] = React.useState();
 
 	React.useEffect(() => {
@@ -61,7 +58,7 @@ export default function Login() {
 	const fetchLogin = async () => {
 		const url = Settings.APIBaseURL + "authorize/login";
 
-		const response = await axios
+		await axios
 			.post(url, {
 				username,
 				password,

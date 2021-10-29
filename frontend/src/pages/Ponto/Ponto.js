@@ -2,6 +2,8 @@ import React from "react";
 import { Grid, Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles/";
 
+import DayTime from "./DayTime";
+
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import TextField from "@mui/material/TextField";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -50,6 +52,24 @@ export default function Ponto() {
 
 	const [hours, setHours] = React.useState("00:00");
 	const [workingDay, setWorkingDay] = React.useState("08:00");
+	const [time, setTime] = React.useState();
+
+	const infoDay = {
+		Entrada: "00:00",
+		Almoço: "00:00",
+		Volta: "00:00",
+		Saída: "00:01",
+	};
+
+	// setTimeout(() => {
+	// 	setTime(
+	// 		String(dateNow.getHours()).padStart(2, "0") +
+	// 			":" +
+	// 			String(dateNow.getMinutes()).padStart(2, "0") +
+	// 			":" +
+	// 			String(dateNow.getSeconds()).padStart(2, "0")
+	// 	);
+	// }, 1000);
 
 	const MenuPeriod = () => {
 		return (
@@ -150,6 +170,20 @@ export default function Ponto() {
 								}}
 							/>
 						</Grid>
+
+						<Grid item xs={1} />
+
+						{/* <Grid item>
+							<TextField
+								value={time}
+								InputProps={{
+									classes: {
+										notchedOutline: styles.borderTextField,
+									},
+									className: styles.hours,
+								}}
+							/>
+						</Grid> */}
 					</Grid>
 				</Paper>
 			</LocalizationProvider>
@@ -157,10 +191,18 @@ export default function Ponto() {
 	};
 
 	return (
-		<Grid container direction="column">
+		<Grid container spacing={1} direction="column">
 			<Grid item xs={12}>
 				<MenuPeriod />
 			</Grid>
+
+			{[1, 2, 3, 4, 5].map(() => {
+				return (
+					<Grid item xs={12}>
+						<DayTime infoDay={infoDay} />
+					</Grid>
+				);
+			})}
 		</Grid>
 	);
 }

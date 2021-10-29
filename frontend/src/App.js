@@ -19,6 +19,7 @@ const styleTheme = createTheme({
 function App() {
 	document.body.style = "background: #212226";
 	document.title = "E-fin";
+	//document.documentElement.style.overflowX = "hidden";
 
 	return (
 		<Router>

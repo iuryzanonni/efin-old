@@ -55,7 +55,7 @@ export default function Ponto() {
 	const [time, setTime] = React.useState();
 
 	const infoDay = {
-		Entrada: "00:00",
+		Entrada: "08:00",
 		Almoço: "00:00",
 		Volta: "00:00",
 		Saída: "00:01",
@@ -196,7 +196,7 @@ export default function Ponto() {
 				<MenuPeriod />
 			</Grid>
 
-			{[1, 2, 3, 4, 5].map(() => {
+			{[1].map(() => {
 				return (
 					<Grid item xs={12}>
 						<DayTime infoDay={infoDay} />

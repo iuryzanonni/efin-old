@@ -5,12 +5,10 @@ import { makeStyles } from "@material-ui/styles/";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import CheckIcon from "@mui/icons-material/Check";
-import { unstable_detectScrollType } from "@material-ui/utils";
 
 const useStyles = makeStyles({
 	paper: {
 		backgroundColor: "#35373E",
-		//width: window.screen.width,
 		color: "#FFFFFF",
 		paddingBlock: 10,
 	},

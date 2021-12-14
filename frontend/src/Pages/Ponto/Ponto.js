@@ -55,10 +55,10 @@ export default function Ponto() {
 	const [time, setTime] = React.useState();
 
 	const infoDay = {
-		Entrada: "08:00",
-		Almoço: "00:00",
-		Volta: "00:00",
-		Saída: "00:01",
+		Entrada: new Date(2021, 11, 14, 10, 0),
+		Almoço: new Date(2021, 11, 14, 15, 32),
+		Volta: new Date(2021, 11, 14, 16, 0),
+		Saída: new Date(2021, 11, 14, 18, 0),
 	};
 
 	// setTimeout(() => {
@@ -195,10 +195,10 @@ export default function Ponto() {
 			<Grid item xs={12}>
 				<MenuPeriod />
 			</Grid>
-
-			{[1].map(() => {
+			;
+			{[1, 0].map((index) => {
 				return (
-					<Grid item xs={12}>
+					<Grid key={index} item xs={12}>
 						<DayTime infoDay={infoDay} />
 					</Grid>
 				);

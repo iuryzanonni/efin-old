@@ -3,14 +3,16 @@ using System;
 using API.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20211215071236_TimeWork")]
+    partial class TimeWork
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,12 +53,7 @@ namespace API.Migrations
                     b.Property<DateTime>("StopLunch")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("Userid")
-                        .HasColumnType("int");
-
                     b.HasKey("DateDay");
-
-                    b.HasIndex("Userid");
 
                     b.ToTable("TimeWork");
                 });
@@ -92,15 +89,6 @@ namespace API.Migrations
                         .IsUnique();
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("API.Models.TimeWork.TimeWork", b =>
-                {
-                    b.HasOne("API.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("Userid");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

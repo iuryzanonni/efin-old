@@ -1,5 +1,6 @@
 ﻿using API.Models;
 using API.Models.Log;
+using API.Models.TimeWork;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Database
@@ -10,6 +11,7 @@ namespace API.Database
 
 		public DbSet<User> User { get; set; }
 		public DbSet<TokenLog> TokenLog { get; set; }
+		public DbSet<TimeWork> TimeWork { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder model)
 		{

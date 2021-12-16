@@ -422,4 +422,7 @@ FodyWeavers.xsd
 # IA
 IA
 
+# BKP-FRONT
+bkp_front
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,react

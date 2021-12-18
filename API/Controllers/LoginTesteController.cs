@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using API.Models;
-using API.Repositories;
 using API.Services;
 
 namespace API.Controllers
@@ -16,21 +15,7 @@ namespace API.Controllers
     [ApiController]
     public class LoginTesteController : ControllerBase
     {
-        [HttpPost]
-        //[Route("login")]
-        [AllowAnonymous]
-        public async Task<ActionResult<dynamic>> Authenticate([FromBody]User p_user=null)
-        {
-			var user = UserRepository.Get(p_user.username, p_user.password);
-
-            if (user == null)
-                return NotFound(new { message = "Usuario ou senha inválidos." });
-
-            var token = TokenService.GenerateToken(user);
-            user.password = "";
-            return new { user = user, token = token };
-        }
-
+  
         [HttpGet]
         [Route("anonymous")]
         [AllowAnonymous]

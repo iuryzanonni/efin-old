@@ -8,11 +8,18 @@ namespace API.Models.TimeWork
 	{
 		[Key]
 		public DateTime DateDay { get; set; }
-		public DateTime StartDay { get; set; }
-		public DateTime StopLunch { get; set; }
-		public DateTime BackLunch { get; set; }
-		public DateTime EndDay { get; set; }
+		public DateTime? StartDay { get; set; }
+		public DateTime? StopLunch { get; set; }
+		public DateTime? BackLunch { get; set; }
+		public DateTime? EndDay { get; set; }
 
 		public User User { get; set; }
+
+		public TimeWork() { }
+		public TimeWork(DateTime date, User user)
+		{
+			DateDay = date;
+			User = user;
+		}
 	}
 }

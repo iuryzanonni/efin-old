@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using API.Models.TimeWork;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace API.DTOs.Mappings
 		public MappingProfile()
 		{
 			CreateMap<User, UserDTO>().ReverseMap();
+			CreateMap<TimeWork, TimeWorkDTO>().ReverseMap();
 		}
 	}
 }

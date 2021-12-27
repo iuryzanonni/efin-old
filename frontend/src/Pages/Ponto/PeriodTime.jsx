@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/styles/";
 import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import CheckIcon from "@mui/icons-material/Check";
+
+import { maskTime } from "../../Components/Masks";
 
 const useStyles = makeStyles({
 	paper: {
@@ -46,8 +46,9 @@ export const PeriodTime = (props) => {
 		return newDate;
 	};
 
-	const handleEnterKeyPress = (event) => {
-		if (event.key === "Enter") {
+	const handleEnterOrTabKeyPress = (event) => {
+		console.log(event.key);
+		if (event.key === "Enter" || event.key === "Tab") {
 			let time = setarTime();
 			props.funcSetTime({
 				...props.time,
@@ -55,6 +56,10 @@ export const PeriodTime = (props) => {
 			});
 		}
 	};
+
+	const handlerTime = useCallback((event) => {
+		event = maskTime(event);
+	}, []);
 
 	return (
 		<Grid container direction="column">
@@ -66,8 +71,9 @@ export const PeriodTime = (props) => {
 					<Grid item xs={6}>
 						<TextField
 							value={thisTime}
+							onKeyUp={handlerTime}
 							onChange={(event) => setThisTime(event.target.value)}
-							onKeyPress={handleEnterKeyPress}
+							onKeyDown={handleEnterOrTabKeyPress}
 							InputProps={{
 								classes: {
 									notchedOutline: styles.borderTextField,
@@ -75,21 +81,6 @@ export const PeriodTime = (props) => {
 								className: styles.displayTime,
 							}}
 						/>
-					</Grid>
-					<Grid item xs={2}>
-						<IconButton
-							color="primary"
-							onClick={() => {
-								let time = setarTime();
-								props.funcSetTime({
-									...props.time,
-									[props.value]: time,
-								});
-							}}
-							style={{ color: "#FFFFFF" }}
-						>
-							<CheckIcon />
-						</IconButton>
 					</Grid>
 				</Grid>
 			</Grid>

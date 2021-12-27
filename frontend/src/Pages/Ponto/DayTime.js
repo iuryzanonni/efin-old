@@ -28,6 +28,7 @@ export const DayTime = (props) => {
 	const date = new Date("2021/12/14");
 
 	const [time, setTime] = React.useState({
+		Date: props.infoDay.Date,
 		Entrada: props.infoDay.Entrada,
 		Almoço: props.infoDay.Almoço,
 		Volta: props.infoDay.Volta,
@@ -50,19 +51,21 @@ export const DayTime = (props) => {
 			<Grid container direction="row" alignItems="center" justifyContent="center">
 				<Grid item xs={2}>
 					<Typography variant="h6">
-						{date.toLocaleDateString(undefined, {
+						{time.Date.toLocaleDateString(undefined, {
 							weekday: "long",
 						})}
 					</Typography>
-					<Typography>{date.toLocaleDateString()}</Typography>
+					<Typography>{time.Date.toLocaleDateString()}</Typography>
 				</Grid>
 				{time &&
 					Object.keys(time).map((value, index) => {
-						return (
-							<Grid key={index} item xs={2}>
-								<PeriodTime value={value} time={time} funcSetTime={setTime} />
-							</Grid>
-						);
+						if (index != 0) {
+							return (
+								<Grid key={index} item xs={2}>
+									<PeriodTime value={value} time={time} funcSetTime={setTime} />
+								</Grid>
+							);
+						}
 					})}
 				<Grid item xs={1}>
 					<Typography variant="h6" color={"green"} fontWeight={"bold"}>

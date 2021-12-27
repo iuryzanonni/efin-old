@@ -70,5 +70,22 @@ namespace API.Controllers
 
 			return Created("Day Successfully Saved.", timeWorkDTO);
 		}
+
+		[HttpPut]
+		[Route("alterDate/{dateday}")]
+		[Authorize(Roles = "owner,manage,user")]
+		public ActionResult AlterDate(DateTime dateday, [FromBody] TimeWork timeWork)
+        {
+			if(dateday != timeWork.DateDay)
+            {
+				return BadRequest();
+            }
+			_contextEF.Entry(timeWork).State = EntityState.Modified;
+			_contextEF.SaveChanges();
+
+			return Ok();
+
+        }
+
 	}
 }

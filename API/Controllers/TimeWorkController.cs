@@ -52,6 +52,21 @@ namespace API.Controllers
 			return timeWorkDTO;
 		}
 
+		[HttpGet]
+		[Route("getTimeWorkPeriod")]
+		[Authorize(Roles = "owner,manage,user")]
+		//[AllowAnonymous]
+		public ActionResult<IEnumerable<TimeWorkDTO>> GetTimeWorkPeriod(DateTime start, DateTime end)
+        {
+			string username = User.Identity.Name;
+			User user = new User(_contextEF);
+			user = user.GetUserWhitName(username);
+
+			var timeWork = _contextEF.TimeWork.Where(tw => tw.DateDay >= start && tw.DateDay <= end && tw.User.id == user.id).ToList();
+			List<TimeWorkDTO> results = _mapper.Map<List<TimeWorkDTO>>(timeWork);
+			return results;
+		}
+
 
 		[HttpPost]
 		[Route("insertDate")]

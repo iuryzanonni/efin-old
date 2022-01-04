@@ -47,7 +47,6 @@ export const PeriodTime = (props) => {
 	};
 
 	const handleEnterOrTabKeyPress = (event) => {
-		console.log(event.key);
 		if (event.key === "Enter" || event.key === "Tab") {
 			let time = setarTime();
 			props.funcSetTime({

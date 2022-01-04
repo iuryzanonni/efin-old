@@ -25,7 +25,6 @@ const useStyles = makeStyles({
 
 export const DayTime = (props) => {
 	const styles = useStyles();
-	const date = new Date("2021/12/14");
 
 	const [time, setTime] = React.useState({
 		Date: props.infoDay.Date,
@@ -45,7 +44,6 @@ export const DayTime = (props) => {
 		let minutes = diffMinutes % 60;
 		return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
 	};
-
 	return (
 		<Paper className={styles.paper}>
 			<Grid container direction="row" alignItems="center" justifyContent="center">

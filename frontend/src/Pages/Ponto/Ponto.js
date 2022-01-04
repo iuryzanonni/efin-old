@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Button } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { DayTime } from "./DayTime";
 import { PontoContext } from "../../Contexts/Ponto";
-import { MenuPeriod } from "./MenuPeriod";
+import MenuPeriod from "./MenuPeriod";
 import axios from "axios";
 import { APIBaseURL } from "../../Settings/Settings.json";
+import Cookies from "js-cookie";
 
 class InfoDay {
 	constructor() {
@@ -16,18 +17,12 @@ class InfoDay {
 	}
 }
 export default function Ponto() {
-	useEffect(() => {
-		fetchTimes();
-	}, []);
-
-	const infoDay = {
-		Entrada: new Date(2021, 11, 14, 10, 0),
-		Almoço: new Date(2021, 11, 14, 15, 32),
-		Volta: new Date(2021, 11, 14, 16, 0),
-		Saída: new Date(2021, 11, 14, 18, 0),
-	};
-
 	const [dataParsed, setDataParsed] = useState([]);
+	const [period, setPeriod] = useState({});
+
+	useEffect(() => {
+		if (period.start) fetchTimes();
+	}, [period]);
 
 	const parseDay = (dateTime) => {
 		if (dateTime === null) {
@@ -80,8 +75,19 @@ export default function Ponto() {
 	};
 
 	const fetchTimes = () => {
+		let url =
+			APIBaseURL +
+			"timework/getTimeWorkPeriod" +
+			"?start=" +
+			period.start.toISOString() +
+			"&end=" +
+			period.end.toISOString();
 		axios
-			.get(APIBaseURL + "timework")
+			.get(url, {
+				headers: {
+					Authorization: `Bearer ${Cookies.get("FINLOGIN")}`,
+				},
+			})
 			.then((res) => res.data)
 			.then((data) => parseData(data));
 	};
@@ -90,9 +96,8 @@ export default function Ponto() {
 		<PontoContext>
 			<Grid container spacing={1} direction="column">
 				<Grid item xs={12}>
-					<MenuPeriod />
+					<MenuPeriod setDate={setPeriod} />
 				</Grid>
-				{console.log(dataParsed)}
 				{dataParsed.map((day, index) => {
 					return (
 						<Grid key={index} item xs={12}>
@@ -100,15 +105,6 @@ export default function Ponto() {
 						</Grid>
 					);
 				})}
-			</Grid>
-			<Grid>
-				<Button
-					onClick={() => {
-						console.log(infoDay, dataParsed);
-					}}
-				>
-					Teste
-				</Button>
 			</Grid>
 		</PontoContext>
 	);

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Grid, Paper, Typography } from "@material-ui/core";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import TextField from "@mui/material/TextField";
@@ -37,29 +37,27 @@ const useStyles = makeStyles({
 	},
 });
 
-export const MenuPeriod = () => {
+export default function MenuPeriod(props) {
 	const styles = useStyles();
 	const _context = useContext(GlobalPontoContext);
-
 	const {
 		pontoContextState: { startDate, endDate, hours, workingDay },
 		pontoContextState,
 		setPontoContextState,
 	} = _context;
 
+	useEffect(() => {
+		let start = startDate;
+		let end = endDate;
+		props.setDate({ start: start, end: end });
+	}, [startDate, endDate]);
+
 	return (
 		<LocalizationProvider dateAdapter={AdapterDateFns}>
 			<Paper className={styles.paper}>
-				<Grid
-					container
-					direction="row"
-					alignItems="center"
-					justifyContent="center"
-				>
+				<Grid container direction="row" alignItems="center" justifyContent="center">
 					<Grid item>
-						<Typography className={styles.text}>
-							Inicio&nbsp;&nbsp;
-						</Typography>
+						<Typography className={styles.text}>Inicio&nbsp;&nbsp;</Typography>
 					</Grid>
 					<Grid item>
 						<DesktopDatePicker
@@ -83,9 +81,7 @@ export const MenuPeriod = () => {
 					<Grid item xs={1} />
 
 					<Grid item>
-						<Typography className={styles.text}>
-							Fim&nbsp;&nbsp;
-						</Typography>
+						<Typography className={styles.text}>Fim&nbsp;&nbsp;</Typography>
 					</Grid>
 					<Grid item>
 						<DesktopDatePicker
@@ -109,9 +105,7 @@ export const MenuPeriod = () => {
 					<Grid item xs={1} />
 
 					<Grid item>
-						<Typography className={styles.text}>
-							Banco de Horas&nbsp;&nbsp;
-						</Typography>
+						<Typography className={styles.text}>Banco de Horas&nbsp;&nbsp;</Typography>
 					</Grid>
 					<Grid item>
 						<TextField
@@ -130,9 +124,7 @@ export const MenuPeriod = () => {
 					<Grid item xs={1} />
 
 					<Grid item>
-						<Typography className={styles.text}>
-							Carga Horária&nbsp;&nbsp;
-						</Typography>
+						<Typography className={styles.text}>Carga Horária&nbsp;&nbsp;</Typography>
 					</Grid>
 					<Grid item>
 						<TextField
@@ -147,22 +139,8 @@ export const MenuPeriod = () => {
 							}}
 						/>
 					</Grid>
-
-					<Grid item xs={1} />
-
-					{/* <Grid item>
-                        <TextField
-                            value={time}
-                            InputProps={{
-                                classes: {
-                                    notchedOutline: styles.borderTextField,
-                                },
-                                className: styles.hours,
-                            }}
-                        />
-                    </Grid> */}
 				</Grid>
 			</Paper>
 		</LocalizationProvider>
 	);
-};
+}
